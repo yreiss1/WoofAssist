@@ -29,13 +29,17 @@ sigma2 = 10**(-SNR / 10) / (4. * np.pi * distance)**2
 room_dim = np.r_[10.,10.]
 aroom = pra.ShoeBox(room_dim, fs=fs, max_order=0, sigma2_awgn=sigma2)
 
-#I ADDED THIS
-fs, signal = wavfile.read("a-team_crazy_fool_x.wav")
+# adding a wav file as the signal
+#fs, signal = wavfile.read("a-team_crazy_fool_x.wav")
+signal = np.random.randn((nfft // 2 + 1) * nfft)
 
 # add the source
 source_location = room_dim / 2 + distance * np.r_[np.cos(azimuth), np.sin(azimuth)]
-source_signal = np.random.randn((nfft // 2 + 1) * nfft)
 aroom.add_source(source_location, signal=signal)
+
+# adding a second source
+source_location2 = room_dim / 2 + distance * np.r_[np.cos(180), np.sin(180)]
+aroom.add_source(source_location2, signal=signal)
 
 # We use a circular array with radius 15 cm # and 12 microphones
 R = pra.circular_2D_array(room_dim / 2, 12, 0., 0.15)
@@ -53,7 +57,7 @@ X = np.array([
 ##############################################
 # Now we can test all the algorithms available
 algo_names = sorted(pra.doa.algorithms.keys())
-print algo_names
+
 
 for algo_name in algo_names:
     # Construct the new DOA object
