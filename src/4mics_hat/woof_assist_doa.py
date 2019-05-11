@@ -14,6 +14,7 @@ from voice_engine.kws import KWS
 from voice_engine.doa_respeaker_4mic_array import DOA
 from pixels import pixels
 import json
+import datetime
 
 def main():
     src = Source(rate=16000, channels=4, frames_size=320)
@@ -30,7 +31,9 @@ def main():
         pixels.wakeup(position)
         print('detected {} at direction {}'.format(keyword, position))
         j = {"cmd":"insert stt here",
-                "direction":str(position)}
+                "direction":str(position),
+                "ts":str(datetime.datetime.now()),
+                }
         print(j)
         
 
