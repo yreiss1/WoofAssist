@@ -30,16 +30,16 @@ room_dim = np.r_[10.,10.]
 aroom = pra.ShoeBox(room_dim, fs=fs, max_order=0, sigma2_awgn=sigma2)
 
 # adding a wav file as the signal
-#fs, signal = wavfile.read("a-team_crazy_fool_x.wav")
-signal = np.random.randn((nfft // 2 + 1) * nfft)
+fs, signal = wavfile.read("a-team_crazy_fool_x.wav")
+#signal = np.random.randn((nfft // 2 + 1) * nfft)
 
 # add the source
 source_location = room_dim / 2 + distance * np.r_[np.cos(azimuth), np.sin(azimuth)]
 aroom.add_source(source_location, signal=signal)
 
 # adding a second source
-source_location2 = room_dim / 2 + distance * np.r_[np.cos(180), np.sin(180)]
-aroom.add_source(source_location2, signal=signal)
+#source_location2 = room_dim / 2 + distance * np.r_[np.cos(180), np.sin(180)]
+#aroom.add_source(source_location2, signal=signal)
 
 # We use a circular array with radius 15 cm # and 12 microphones
 R = pra.circular_2D_array(room_dim / 2, 12, 0., 0.15)
